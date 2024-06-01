@@ -1,9 +1,60 @@
-import React from 'react'
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
+import PasswordForm from "../../components/Input/PasswordInput";
+import { validateEmail } from "../../utils/helper";
 const Login = () => {
-  return (
-    <div>Login</div>
-  )
-}
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-export default Login
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setError("Please enter valid email address");
+      return;
+    }
+    if (!password) {
+      setError("Please enter password");
+      return;
+    }
+    //Handle login api here
+    setError("");
+  };
+  return (
+    <>
+      <Navbar />
+      <div className="flex items-center justify-center mt-28">
+        <div className="w-96 border rounded bg-white px-7 py-10">
+          <form action="" onSubmit={handleSubmit}>
+            <h4 className="text-2xl mb-7">Login</h4>
+            <input
+              type="text"
+              placeholder="Email"
+              className="input-box"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <PasswordForm
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
+            <button type="submit" className="btn-primary">
+              Login
+            </button>
+            <p className="text-sm text-center mt-4">
+              Not registered yet?{" "}
+              <Link to="/signup" className="font-medium text-primary underline">
+                Create an account
+              </Link>
+            </p>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Login;
