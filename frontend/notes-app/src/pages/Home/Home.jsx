@@ -142,7 +142,11 @@ const Home = () => {
           </div>
         ) : (
           <EmptyCard
-            message={`Start creating first note! Click the 'Add' button to got down your thoughts, ideas, and reminders. Let's get started!`}
+            message={
+              isSearch
+                ? `Oops! No notes matching.`
+                : `Start creating first note! Click the 'Add' button to got down your thoughts, ideas, and reminders. Let's get started!`
+            }
           />
         )}
       </div>
