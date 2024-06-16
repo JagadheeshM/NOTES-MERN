@@ -61,7 +61,7 @@ app.post("/create-account",async(req,res)=>{
     });
 });
 
-app.get("/login",async(req,res)=>{
+app.post("/login",async(req,res)=>{
     const {email,password} = req.body;
     if(!email){
         return res.status(400).json({message:"Email is required"});
@@ -71,7 +71,7 @@ app.get("/login",async(req,res)=>{
     }
 
     const userInfo = await User.findOne({email:email});
-
+    console.log(userInfo);
     if(!userInfo){
         return res.status(400).json({message:"User not found"});
     }
@@ -88,7 +88,7 @@ app.get("/login",async(req,res)=>{
             accessToken,
         });
     }else{
-        return res.json(400).json({
+        return res.status(400).json({
             error:true,
             message:"Invalid credentials",
         });
