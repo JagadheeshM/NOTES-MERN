@@ -13,6 +13,7 @@ const Home = () => {
     data: null,
   });
 
+  const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
 
   const navigate = useNavigate();
@@ -33,7 +34,18 @@ const Home = () => {
     }
   };
 
+  //get all notes
+  const getAllNotes = async () => {
+    try {
+      const response = await axiosInstance.get("/get-all-notes");
+      setAllNotes(response.data.notes);
+    } catch (error) {
+      console.log("An unexpected error occured. Please try again.");
+    }
+  };
+
   useEffect(() => {
+    getAllNotes();
     getUserInfo();
     return () => {};
   }, []);
@@ -43,16 +55,19 @@ const Home = () => {
       <Navbar userInfo={userInfo} />
       <div className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
-          <Notecard
-            title="Meeting on 3rd june"
-            date="1st june 2024"
-            content="Meeting on 3rd june"
-            tags="#Meeting"
-            isPinned={true}
-            onEdit={() => {}}
-            onDelete={() => {}}
-            onPinNote={() => {}}
-          />
+          {allNotes.map((item, index) => (
+            <Notecard
+              key={item._id}
+              title={item.title}
+              date={item.createdOn}
+              content={item.content}
+              tags={item.tags}
+              isPinned={item.isPinned}
+              onEdit={() => {}}
+              onDelete={() => {}}
+              onPinNote={() => {}}
+            />
+          ))}
         </div>
         <button
           className="w-16 h-16 flex items-center justify-center rounded-2xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10"
