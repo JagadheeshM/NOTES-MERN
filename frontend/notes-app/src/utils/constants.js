@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://my-notes-mern.onrender.com/'
+export const BASE_URL = 'https://my-notes-mern-2.onrender.com'
