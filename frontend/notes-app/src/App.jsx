@@ -8,9 +8,8 @@ import Welcome from "./pages/Welcome/Welcome";
 const routes = (
   <Router>
     <Routes>
-      <Route path="/" element={<Welcome />} />
       <Route path="/dashboard" exact element={<Home />} />
-      <Route path="/login" exact element={<Login />} />
+      <Route path="/" exact element={<Login />} />
       <Route path="/Signup" exact element={<SignUp />} />
     </Routes>
   </Router>
